@@ -1,11 +1,22 @@
 //Symbol Name		Page Address
 //----------------	------------
-//	AVG                     3030
-//	GRADE                   3031
-//	MAX                     302F
-//	MIN                     302E
+//	ASCIIZERO               305A
+//	AVG                     3063
+//	GRADE                   3064
+//	INLOOP                  300E
+//	INPUTS                  3004
+//	MAX                     3062
+//	MIN                     3061
 //	Main                    3000
-//	PROMPT                  301A
-//	SCORES                  3028
-//	SUM                     302D
-//	WELCOME                 3003
+//	NEWLINE                 3058
+//	PROMPT                  304A
+//	SAVER1                  3065
+//	SAVER2                  3066
+//	SAVER3                  3067
+//	SAVER4                  3068
+//	SAVER5                  3069
+//	SAVER6                  306A
+//	SAVER7                  306B
+//	SCORES                  305B
+//	SUM                     3060
+//	WELCOME                 3033
