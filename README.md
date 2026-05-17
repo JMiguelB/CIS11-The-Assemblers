@@ -1,7 +1,7 @@
 # CIS11-The-Assemblers
 The Assemblers group project option B: Test Score Calculator 
 ## Team Members
-- Miguel: LC-3 Code and Pseudocode
+- Miguel: Code and Pseudocode
 - Josh: Documentation
 - Cole: Code and Pseudocode
 ## Description
