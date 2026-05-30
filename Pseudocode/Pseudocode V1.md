@@ -118,7 +118,7 @@ FINDMIN:
 ---
 
 ## STEP 3 — FINDMAX
-**Status: Not yet implemented**
+**Status: Implemented**
 Same structure as FINDMIN, but tracks the largest score instead.
 
 ```
@@ -136,7 +136,8 @@ FINDMAX:
 
         Load SCORES[current] into R4
         Load current MAX into R3
-        Compute R4 - R3 by negating R3 and adding to R4
+        Negate R3 and store the result in R5
+        Compute R4 - MAX using R5, store result in R5
 
         If result is positive (R4 > MAX):
             Save R4 into MAX  (new maximum found)
