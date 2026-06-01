@@ -118,7 +118,7 @@ FINDMIN:
 ---
 
 ## STEP 3 — FINDMAX
-**Status: Not yet implemented**
+**Status: Implemented**
 Same structure as FINDMIN, but tracks the largest score instead.
 
 ```
@@ -136,7 +136,8 @@ FINDMAX:
 
         Load SCORES[current] into R4
         Load current MAX into R3
-        Compute R4 - R3 by negating R3 and adding to R4
+        Negate R3 and store the result in R5
+        Compute R4 - MAX using R5, store result in R5
 
         If result is positive (R4 > MAX):
             Save R4 into MAX  (new maximum found)
@@ -153,7 +154,7 @@ FINDMAX:
 ---
 
 ## STEP 4 — FINDAVG
-**Status: Not yet implemented**
+**Status: Implemented**
 Divides the SUM by 5 using repeated subtraction to compute the average.
 
 ```
@@ -180,7 +181,7 @@ FINDAVG:
 ---
 
 ## STEP 5 — FINDGRADE
-**Status: Not yet implemented**
+**Status: Implemented**
 Compares AVG against grade thresholds using a branch chain and stores the
 corresponding ASCII letter character into GRADE.
 
@@ -192,13 +193,35 @@ FINDGRADE:
 
     Compare R1 to 90:
         If AVG >= 90: GRADE = 'A'  (store ASCII x0041)
+        Load ASCII '0' (48) into R2  (used as base for building ASCII letter values)
+        Compute AVG - 90 using R3, store result in R4
+        If result is zero or positive (AVG >= 90): GRADE = 'A'  (store ASCII 65)Build R3 = -90 using repeated addition of -9
+
         Else compare R1 to 80:
             If AVG >= 80: GRADE = 'B'  (store ASCII x0042)
+            Add 10 to R3  (R3 = -80)
+            Compute AVG - 80 using R3, store result in R4
+            If result is zero or positive (AVG >= 80): GRADE = 'B'  (store ASCII 66)
+
+
             Else compare R1 to 70:
                 If AVG >= 70: GRADE = 'C'  (store ASCII x0043)
+                Add 10 to R3  (R3 = -70)
+                Compute AVG - 70 using R3, store result in R4
+                If result is zero or positive (AVG >= 70): GRADE = 'C'  (store ASCII 67)
+
                 Else compare R1 to 60:
                     If AVG >= 60: GRADE = 'D'  (store ASCII x0044)
-                    Else: GRADE = 'F'  (store ASCII x0046)
+                    Add 10 to R3  (R3 = -60)
+                    Compute AVG - 60 using R3, store result in R4
+                    If result is zero or positive (AVG >= 60): GRADE = 'D'  (store ASCII 68)
+
+                        Else: GRADE = 'F'  (store ASCII x0046)
+                        Otherwise: GRADE = 'F'  (store ASCII 70)
+
+
+    Each grade letter is built by adding an offset to R2 in two steps
+    to stay within the immediate value limit, then stored into GRADE
 
     Restore registers R1 through R7
     Return to Main
