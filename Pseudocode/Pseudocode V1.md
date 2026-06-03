@@ -230,7 +230,7 @@ FINDGRADE:
 ---
 
 ## STEP 6 — PRINTRESULTS
-**Status: Not yet implemented**
+**Status: Implemented**
 Prints the MIN, MAX, and AVG as readable two-digit numbers, then prints the
 letter grade. Each numeric value must be converted back to ASCII digits before
 printing (reverse of the ASCII subtraction done in INPUTS).
@@ -274,6 +274,7 @@ PRINTRESULTS:
 
 ## DATA SECTION
 **Status: Declared — some labels still needed**
+**Status 06/02/2026: Added new variables for PUSH/POP & string labels for output**
 
 ```
 WELCOME   .STRINGZ  "TEST SCORE CALCULATOR\n"
