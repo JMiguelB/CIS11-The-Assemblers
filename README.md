@@ -16,3 +16,5 @@ This LC-3 program asks the user to enter 5 test scores. The program calculates a
 ## Folder Guide
 - `documentation/` = project documents
 - `Code/` = LC-3 assembly code
+- `Pseudocode/` = project Pseudocode
+- `Testing/` = input and output
