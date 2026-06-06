@@ -7,28 +7,28 @@
 ;Run: Assemble and run in LC-3 simulator
 .ORIG x3000
 Main
-	LEA R0, WELCOME		;PRINTS THE WELCOME MESSAGE
+	LEA R0, WELCOME                     ;PRINTS THE WELCOME MESSAGE
 	PUTS
-	LEA R6, STACKBASE	;INITIALIZE STACK POINTER TO TOP OF STACK
+	LEA R6, STACKBASE                   ;INITIALIZE STACK POINTER TO TOP OF STACK
 
 	;PROGRAM WILL STARTS HERE
 	;STEP 1: INPUT 5 TEST SCORE
-	JSR INPUTS	 ;Inputing function
+	JSR INPUTS                          ;Inputing function
 
 	;STEP 2: FIND MIN SCORE
-	JSR FINDMIN	 ;fIND THE MINIMUM
+	JSR FINDMIN                         ;fIND THE MINIMUM
 
 	;STEP 3: FIND MAX SCORE
-	JSR FINDMAX	 ;FIND THE MAXIMUM
+	JSR FINDMAX                         ;FIND THE MAXIMUM
 
 	;STEP 4: FIND AVG SCORE
-	JSR FINDAVG	;FIND THE AVERAGE
+	JSR FINDAVG                         ;FIND THE AVERAGE
 
 	;STEP 5: FIND LETTER GRADE
-	JSR FINDGRADE	;FIND THE LETTER GRADE
+	JSR FINDGRADE                       ;FIND THE LETTER GRADE
 
 	;STEP 6: PRINT RESULT
-	JSR PRINTRESULTS ;PRINT ALL RESULTS
+	JSR PRINTRESULTS                    ;PRINT ALL RESULTS
 
 	HALT
 
@@ -58,200 +58,200 @@ SAVER5  .FILL #0
 SAVER6  .FILL #0
 SAVER7  .FILL #0
 
-STACK     .BLKW 8       ; STACK SPACE (8 WORDS)
-STACKBASE .FILL #0      ; STACK BASE MARKER (R6 STARTS HERE)
+STACK     .BLKW 8                    ; STACK SPACE (8 WORDS)
+STACKBASE .FILL #0                   ; STACK BASE MARKER (R6 STARTS HERE)
 
 ;STEP 1
 INPUTS
-	ST R1, SAVER1	;STORE R1
-	ST R2, SAVER2	;STORE R2
-	ST R3, SAVER3	;STORE R3
-	ST R4, SAVER4	;STORE R4
-	ST R5, SAVER5	;STORE R5
-	ST R6, SAVER6	;STORE R6
-	ST R7, SAVER7	;STORE WHERE TO RETURN BACK IN MAIN
+	ST R1, SAVER1                       ;STORE R1
+	ST R2, SAVER2                       ;STORE R2
+	ST R3, SAVER3                       ;STORE R3
+	ST R4, SAVER4                       ;STORE R4
+	ST R5, SAVER5                       ;STORE R5
+	ST R6, SAVER6                       ;STORE R6
+	ST R7, SAVER7                       ;STORE WHERE TO RETURN BACK IN MAIN
 
-	LEA R1, SCORES	;R1 WILL POINT TO THE SCORES ARRAY
-	AND R2, R2, #0	;CLEAR R2
-	ADD R2, R2, #5	;WE NEED TO INPUT 5 SCORES
-INLOOP			;START OF LOOP TO GET 5 SCORES
-	LEA R0, PROMPT	;ASK USER TO ENTER SCORE
+	LEA R1, SCORES                      ;R1 WILL POINT TO THE SCORES ARRAY
+	AND R2, R2, #0                      ;CLEAR R2
+	ADD R2, R2, #5                      ;WE NEED TO INPUT 5 SCORES
+INLOOP                               ;START OF LOOP TO GET 5 SCORES
+	LEA R0, PROMPT                      ;ASK USER TO ENTER SCORE
 	PUTS
-	GETC		;GET FIRST NUMBER
-	OUT		;SHOW INPUT
-	LD R3, ASCIIZERO ;ASCII VALUE OF ZERO
-	NOT R3, R3	;FLIP BITS
-	ADD R3, R3, #1	;MAKE IT NEGATIVE
-	ADD R4, R0, R3	;CHANGE ASCII TO REAL NUMBER
+	GETC                                ;GET FIRST NUMBER
+	OUT                                 ;SHOW INPUT
+	LD R3, ASCIIZERO                    ;ASCII VALUE OF ZERO
+	NOT R3, R3                          ;FLIP BITS
+	ADD R3, R3, #1                      ;MAKE IT NEGATIVE
+	ADD R4, R0, R3                      ;CHANGE ASCII TO REAL NUMBER
 
 	;MULTIPLY FIRST DIGIT BY 10
-	ADD R5, R4, R4	;R5 = FIRST DIGIT X 2
-	ADD R5, R5, R5	;R5 = FIRST DIGIT X 4
-	ADD R5, R5, R5	;R5 = FIRST DIGIT X 8
-	ADD R5, R5, R4	;R5 = FIRST DIGIT X 9
-	ADD R5, R5, R4	;R5 = FIRST DIGIT X 10
+	ADD R5, R4, R4                      ;R5 = FIRST DIGIT X 2
+	ADD R5, R5, R5                      ;R5 = FIRST DIGIT X 4
+	ADD R5, R5, R5                      ;R5 = FIRST DIGIT X 8
+	ADD R5, R5, R4                      ;R5 = FIRST DIGIT X 9
+	ADD R5, R5, R4                      ;R5 = FIRST DIGIT X 10
 
-	GETC		;GET SECOND NUMBER
-	OUT		;SHOW INPUT
-	LD R3, ASCIIZERO ;ASCII VALUE OF ZERO
-	NOT R3, R3	;FLIP BITS
-	ADD R3, R3, #1	;MAKE IT NEGATIVE
-	ADD R6, R0, R3	;CHANGE ASCII TO REAL NUMBER
+	GETC                                ;GET SECOND NUMBER
+	OUT                                 ;SHOW INPUT
+	LD R3, ASCIIZERO                    ;ASCII VALUE OF ZERO
+	NOT R3, R3                          ;FLIP BITS
+	ADD R3, R3, #1                      ;MAKE IT NEGATIVE
+	ADD R6, R0, R3                      ;CHANGE ASCII TO REAL NUMBER
 
-	ADD R5, R5, R6	;FINAL SCORE = FIRST DIGIT X 10 + SECOND DIGIT
-	STR R5, R1, #0	;SAVE SCORE INSIDE ARRAY
-	ADD R1, R1, #1	;MOVE TO NEXT ARRAY SPOT
-	LD R3, SUM	;LOAD CURRENT SUM
-	ADD R3, R3, R5	;ADD THE NEW SCORE TO SUM
-	ST R3, SUM	;SAVE THE NEW SUM
-	LEA R0, NEWLINE	;MOVE TO NEXT LINE
+	ADD R5, R5, R6                      ;FINAL SCORE = FIRST DIGIT X 10 + SECOND DIGIT
+	STR R5, R1, #0                      ;SAVE SCORE INSIDE ARRAY
+	ADD R1, R1, #1                      ;MOVE TO NEXT ARRAY SPOT
+	LD R3, SUM                          ;LOAD CURRENT SUM
+	ADD R3, R3, R5                      ;ADD THE NEW SCORE TO SUM
+	ST R3, SUM                          ;SAVE THE NEW SUM
+	LEA R0, NEWLINE                     ;MOVE TO NEXT LINE
 
 	PUTS
 
-	ADD R2, R2, #-1	;SUBTRACT 1 FROM COUNTER
-	BRp INLOOP	;KEEP LOOPING UNTIL 5 SCORES ARE DONE
+	ADD R2, R2, #-1                     ;SUBTRACT 1 FROM COUNTER
+	BRp INLOOP                          ;KEEP LOOPING UNTIL 5 SCORES ARE DONE
 
-	LD R1, SAVER1	;RESTORE R1
-	LD R2, SAVER2	;RESTORE R2
-	LD R3, SAVER3	;RESTORE R3
-	LD R4, SAVER4	;RESTORE R4
-	LD R5, SAVER5	;RESTORE R5
-	LD R6, SAVER6	;RESTORE R6
-	LD R7, SAVER7	;RESTORE RETURN ADDRESS
+	LD R1, SAVER1                       ;RESTORE R1
+	LD R2, SAVER2                       ;RESTORE R2
+	LD R3, SAVER3                       ;RESTORE R3
+	LD R4, SAVER4                       ;RESTORE R4
+	LD R5, SAVER5                       ;RESTORE R5
+	LD R6, SAVER6                       ;RESTORE R6
+	LD R7, SAVER7                       ;RESTORE RETURN ADDRESS
 
-	RET		;GO BACK TO MAIN
+	RET                                 ;GO BACK TO MAIN
 
 ;STEP 2
 FINDMIN
-	ST R1, SAVER1	;STORE R1
-	ST R2, SAVER2	;STORE R2
-	ST R3, SAVER3	;STORE R3
-	ST R4, SAVER4	;STORE R4
-	ST R5, SAVER5	;STORE R5
-	ST R6, SAVER6	;STORE R6
-	ST R7, SAVER7	;STORE WHERE TO RETURN BACK IN MAIN
+	ST R1, SAVER1                       ;STORE R1
+	ST R2, SAVER2                       ;STORE R2
+	ST R3, SAVER3                       ;STORE R3
+	ST R4, SAVER4                       ;STORE R4
+	ST R5, SAVER5                       ;STORE R5
+	ST R6, SAVER6                       ;STORE R6
+	ST R7, SAVER7                       ;STORE WHERE TO RETURN BACK IN MAIN
 
-	LEA R1, SCORES	;R1 POINTS TO SCORES ARRAY
-	LDR R3, R1, #0	;GET FIRST SCORE
-	ST R3, MIN	;FIRST SCORE IS MIN FOR NOW
-	ADD R1, R1, #1	;MOVE TO SECOND SCORE
-	AND R2, R2, #0	;CLEAR R2
-	ADD R2, R2, #4	;CHECK THE OTHER 4 SCORES
-MINLOOP			;START LOOP TO FIND MIN
-	LDR R4, R1, #0	;GET NEXT SCORE
-	LD R3, MIN	;LOAD CURRENT MIN
-	NOT R5, R3	;FLIP CURRENT MIN
-	ADD R5, R5, #1	;MAKE CURRENT MIN NEGATIVE
-	ADD R5, R4, R5	;COMPARE NEXT SCORE WITH MIN
-	BRn NEWMIN	;IF NEXT SCORE IS SMALLER, SAVE IT
+	LEA R1, SCORES                      ;R1 POINTS TO SCORES ARRAY
+	LDR R3, R1, #0                      ;GET FIRST SCORE
+	ST R3, MIN                          ;FIRST SCORE IS MIN FOR NOW
+	ADD R1, R1, #1                      ;MOVE TO SECOND SCORE
+	AND R2, R2, #0                      ;CLEAR R2
+	ADD R2, R2, #4                      ;CHECK THE OTHER 4 SCORES
+MINLOOP                              ;START LOOP TO FIND MIN
+	LDR R4, R1, #0                      ;GET NEXT SCORE
+	LD R3, MIN                          ;LOAD CURRENT MIN
+	NOT R5, R3                          ;FLIP CURRENT MIN
+	ADD R5, R5, #1                      ;MAKE CURRENT MIN NEGATIVE
+	ADD R5, R4, R5                      ;COMPARE NEXT SCORE WITH MIN
+	BRn NEWMIN                          ;IF NEXT SCORE IS SMALLER, SAVE IT
 NEXTMIN
-	ADD R1, R1, #1	;MOVE TO NEXT SCORE
-	ADD R2, R2, #-1	;COUNT DOWN
-	BRp MINLOOP	;KEEP CHECKING UNTIL DONE
+	ADD R1, R1, #1                      ;MOVE TO NEXT SCORE
+	ADD R2, R2, #-1                     ;COUNT DOWN
+	BRp MINLOOP                         ;KEEP CHECKING UNTIL DONE
 
-	LD R1, SAVER1	;RESTORE R1
-	LD R2, SAVER2	;RESTORE R2
-	LD R3, SAVER3	;RESTORE R3
-	LD R4, SAVER4	;RESTORE R4
-	LD R5, SAVER5	;RESTORE R5
-	LD R6, SAVER6	;RESTORE R6
-	LD R7, SAVER7	;RESTORE RETURN ADDRESS
+	LD R1, SAVER1                       ;RESTORE R1
+	LD R2, SAVER2                       ;RESTORE R2
+	LD R3, SAVER3                       ;RESTORE R3
+	LD R4, SAVER4                       ;RESTORE R4
+	LD R5, SAVER5                       ;RESTORE R5
+	LD R6, SAVER6                       ;RESTORE R6
+	LD R7, SAVER7                       ;RESTORE RETURN ADDRESS
 
-	RET		;GO BACK TO MAIN
+	RET                                 ;GO BACK TO MAIN
 NEWMIN
-	ST R4, MIN	;SAVE NEW LOWEST SCORE
-	BRnzp NEXTMIN	;GO BACK TO LOOP
+	ST R4, MIN                          ;SAVE NEW LOWEST SCORE
+	BRnzp NEXTMIN                       ;GO BACK TO LOOP
 
 ;STEP 3
 FINDMAX
-	ST R1, SAVER1	;STORE R1
-	ST R2, SAVER2	;STORE R2
-	ST R3, SAVER3	;STORE R3
-	ST R4, SAVER4	;STORE R4
-	ST R5, SAVER5	;STORE R5
-	ST R6, SAVER6	;STORE R6
-	ST R7, SAVER7	;STORE WHERE TO RETURN BACK IN MAIN
+	ST R1, SAVER1                       ;STORE R1
+	ST R2, SAVER2                       ;STORE R2
+	ST R3, SAVER3                       ;STORE R3
+	ST R4, SAVER4                       ;STORE R4
+	ST R5, SAVER5                       ;STORE R5
+	ST R6, SAVER6                       ;STORE R6
+	ST R7, SAVER7                       ;STORE WHERE TO RETURN BACK IN MAIN
 
-	LEA R1, SCORES	;R1 POINTS TO SCORES ARRAY
-	LDR R3, R1, #0	;GET FIRST SCORE
-	ST R3, MAX	;FIRST SCORE IS MAX FOR NOW
-	ADD R1, R1, #1	;MOVE TO SECOND SCORE
-	AND R2, R2, #0	;CLEAR R2
-	ADD R2, R2, #4	;CHECK THE OTHER 4 SCORES
-MAXLOOP			;START LOOP TO FIND MAX
-	LDR R4, R1, #0	;GET NEXT SCORE
-	LD R3, MAX	;LOAD CURRENT MAX
-	NOT R5, R3	;FLIP CURRENT MAX
-	ADD R5, R5, #1	;MAKE CURRENT MAX NEGATIVE
-	ADD R5, R4, R5	;COMPARE NEXT SCORE WITH MAX
-	BRp NEWMAX	;IF NEXT SCORE IS BIGGER, SAVE IT
+	LEA R1, SCORES                      ;R1 POINTS TO SCORES ARRAY
+	LDR R3, R1, #0                      ;GET FIRST SCORE
+	ST R3, MAX                          ;FIRST SCORE IS MAX FOR NOW
+	ADD R1, R1, #1                      ;MOVE TO SECOND SCORE
+	AND R2, R2, #0                      ;CLEAR R2
+	ADD R2, R2, #4                      ;CHECK THE OTHER 4 SCORES
+MAXLOOP                              ;START LOOP TO FIND MAX
+	LDR R4, R1, #0                      ;GET NEXT SCORE
+	LD R3, MAX                          ;LOAD CURRENT MAX
+	NOT R5, R3                          ;FLIP CURRENT MAX
+	ADD R5, R5, #1                      ;MAKE CURRENT MAX NEGATIVE
+	ADD R5, R4, R5                      ;COMPARE NEXT SCORE WITH MAX
+	BRp NEWMAX                          ;IF NEXT SCORE IS BIGGER, SAVE IT
 NEXTMAX
-	ADD R1, R1, #1	;MOVE TO NEXT SCORE
-	ADD R2, R2, #-1	;COUNT DOWN
-	BRp MAXLOOP	;KEEP CHECKING UNTIL DONE
+	ADD R1, R1, #1                      ;MOVE TO NEXT SCORE
+	ADD R2, R2, #-1                     ;COUNT DOWN
+	BRp MAXLOOP                         ;KEEP CHECKING UNTIL DONE
 
-	LD R1, SAVER1	;RESTORE R1
-	LD R2, SAVER2	;RESTORE R2
-	LD R3, SAVER3	;RESTORE R3
-	LD R4, SAVER4	;RESTORE R4
-	LD R5, SAVER5	;RESTORE R5
-	LD R6, SAVER6	;RESTORE R6
-	LD R7, SAVER7	;RESTORE RETURN ADDRESS
+	LD R1, SAVER1                       ;RESTORE R1
+	LD R2, SAVER2                       ;RESTORE R2
+	LD R3, SAVER3                       ;RESTORE R3
+	LD R4, SAVER4                       ;RESTORE R4
+	LD R5, SAVER5                       ;RESTORE R5
+	LD R6, SAVER6                       ;RESTORE R6
+	LD R7, SAVER7                       ;RESTORE RETURN ADDRESS
 
-	RET		;GO BACK TO MAIN
+	RET                                 ;GO BACK TO MAIN
 NEWMAX
-	ST R4, MAX	;SAVE NEW HIGHEST SCORE
-	BRnzp NEXTMAX	;GO BACK TO LOOP
+	ST R4, MAX                          ;SAVE NEW HIGHEST SCORE
+	BRnzp NEXTMAX                       ;GO BACK TO LOOP
 
 ;STEP 4
 FINDAVG
-	ST R1, SAVER1	;STORE R1
-	ST R2, SAVER2	;STORE R2
-	ST R3, SAVER3	;STORE R3
-	ST R4, SAVER4	;STORE R4
-	ST R5, SAVER5	;STORE R5
-	ST R6, SAVER6	;STORE R6
-	ST R7, SAVER7	;STORE WHERE TO RETURN BACK IN MAIN
+	ST R1, SAVER1                       ;STORE R1
+	ST R2, SAVER2                       ;STORE R2
+	ST R3, SAVER3                       ;STORE R3
+	ST R4, SAVER4                       ;STORE R4
+	ST R5, SAVER5                       ;STORE R5
+	ST R6, SAVER6                       ;STORE R6
+	ST R7, SAVER7                       ;STORE WHERE TO RETURN BACK IN MAIN
 
-	LD R1, SUM	;LOAD SUM INTO R1
-	AND R2, R2, #0	;CLEAR R2 (WILL HOLD AVERAGE)
-	AND R3, R3, #0	;CLEAR R3
-	ADD R3, R3, #-5	;R3 = -5 (SUBTRACT 5 EACH LOOP)
+	LD R1, SUM                          ;LOAD SUM INTO R1
+	AND R2, R2, #0                      ;CLEAR R2 (WILL HOLD AVERAGE)
+	AND R3, R3, #0                      ;CLEAR R3
+	ADD R3, R3, #-5                     ;R3 = -5 (SUBTRACT 5 EACH LOOP)
 
 AVGLOOP
-	ADD R1, R1, R3	;R1 = R1 - 5
-	BRn AVGDONE	;IF R1 WENT NEGATIVE, STOP
-	ADD R2, R2, #1	;INCREMENT AVERAGE COUNTER
-	BRnzp AVGLOOP	;KEEP LOOPING
+	ADD R1, R1, R3                      ;R1 = R1 - 5
+	BRn AVGDONE                         ;IF R1 WENT NEGATIVE, STOP
+	ADD R2, R2, #1                      ;INCREMENT AVERAGE COUNTER
+	BRnzp AVGLOOP                       ;KEEP LOOPING
 
 AVGDONE
-	ST R2, AVG	;SAVE AVERAGE
+	ST R2, AVG                          ;SAVE AVERAGE
 
-	LD R1, SAVER1	;RESTORE R1
-	LD R2, SAVER2	;RESTORE R2
-	LD R3, SAVER3	;RESTORE R3
-	LD R4, SAVER4	;RESTORE R4
-	LD R5, SAVER5	;RESTORE R5
-	LD R6, SAVER6	;RESTORE R6
-	LD R7, SAVER7	;RESTORE RETURN ADDRESS
+	LD R1, SAVER1                       ;RESTORE R1
+	LD R2, SAVER2                       ;RESTORE R2
+	LD R3, SAVER3                       ;RESTORE R3
+	LD R4, SAVER4                       ;RESTORE R4
+	LD R5, SAVER5                       ;RESTORE R5
+	LD R6, SAVER6                       ;RESTORE R6
+	LD R7, SAVER7                       ;RESTORE RETURN ADDRESS
 
-	RET		;GO BACK TO MAIN
+	RET                                 ;GO BACK TO MAIN
 
 ;STEP 5
 FINDGRADE
-	ST R1, SAVER1	;STORE R1
-	ST R2, SAVER2	;STORE R2
-	ST R3, SAVER3	;STORE R3
-	ST R4, SAVER4	;STORE R4
-	ST R5, SAVER5	;STORE R5
-	ST R6, SAVER6	;STORE R6
-	ST R7, SAVER7	;STORE WHERE TO RETURN BACK IN MAIN
+	ST R1, SAVER1                       ;STORE R1
+	ST R2, SAVER2                       ;STORE R2
+	ST R3, SAVER3                       ;STORE R3
+	ST R4, SAVER4                       ;STORE R4
+	ST R5, SAVER5                       ;STORE R5
+	ST R6, SAVER6                       ;STORE R6
+	ST R7, SAVER7                       ;STORE WHERE TO RETURN BACK IN MAIN
 
-	LD R1, AVG	;LOAD AVERAGE INTO R1
-	LD R2, ASCIIZERO ;LOAD ASCII '0' (48) INTO R2
+	LD R1, AVG                          ;LOAD AVERAGE INTO R1
+	LD R2, ASCIIZERO                    ;LOAD ASCII '0' (48) INTO R2
 
-	AND R3, R3, #0	;CLEAR R3
-	ADD R3, R3, #-9	;BUILD -90 FOR COMPARISON
+	AND R3, R3, #0                      ;CLEAR R3
+	ADD R3, R3, #-9                     ;BUILD -90 FOR COMPARISON
 	ADD R3, R3, #-9
 	ADD R3, R3, #-9
 	ADD R3, R3, #-9
@@ -260,190 +260,190 @@ FINDGRADE
 	ADD R3, R3, #-9
 	ADD R3, R3, #-9
 	ADD R3, R3, #-9
-	ADD R3, R3, #-9	;R3 = -90
-	ADD R4, R1, R3	;R4 = AVG - 90
-	BRzp ISAGRD	;IF AVG >= 90, GRADE IS A
+	ADD R3, R3, #-9                     ;R3 = -90
+	ADD R4, R1, R3                      ;R4 = AVG - 90
+	BRzp ISAGRD                         ;IF AVG >= 90, GRADE IS A
 
-	ADD R3, R3, #10	;R3 = -80
-	ADD R4, R1, R3	;R4 = AVG - 80
-	BRzp ISBGRD	;IF AVG >= 80, GRADE IS B
+	ADD R3, R3, #10                     ;R3 = -80
+	ADD R4, R1, R3                      ;R4 = AVG - 80
+	BRzp ISBGRD                         ;IF AVG >= 80, GRADE IS B
 
-	ADD R3, R3, #10	;R3 = -70
-	ADD R4, R1, R3	;R4 = AVG - 70
-	BRzp ISCGRD	;IF AVG >= 70, GRADE IS C
+	ADD R3, R3, #10                     ;R3 = -70
+	ADD R4, R1, R3                      ;R4 = AVG - 70
+	BRzp ISCGRD                         ;IF AVG >= 70, GRADE IS C
 
-	ADD R3, R3, #10	;R3 = -60
-	ADD R4, R1, R3	;R4 = AVG - 60
-	BRzp ISDGRD	;IF AVG >= 60, GRADE IS D
+	ADD R3, R3, #10                     ;R3 = -60
+	ADD R4, R1, R3                      ;R4 = AVG - 60
+	BRzp ISDGRD                         ;IF AVG >= 60, GRADE IS D
 
 ISFGRD
-	ADD R0, R2, #15	;ASCII '0' (48) + 15 = 63
-	ADD R0, R0, #7	;R0 = 70 = ASCII 'F'
-	ST R0, GRADE	;SAVE GRADE
+	ADD R0, R2, #15                     ;ASCII '0' (48) + 15 = 63
+	ADD R0, R0, #7                      ;R0 = 70 = ASCII 'F'
+	ST R0, GRADE                        ;SAVE GRADE
 	BRnzp GRDDONE
 
 ISAGRD
-	ADD R0, R2, #15	;ASCII '0' (48) + 15 = 63, THEN +2 BELOW
-	ADD R0, R0, #2	;R0 = 65 = ASCII 'A'
-	ST R0, GRADE	;SAVE GRADE
+	ADD R0, R2, #15                     ;ASCII '0' (48) + 15 = 63, THEN +2 BELOW
+	ADD R0, R0, #2                      ;R0 = 65 = ASCII 'A'
+	ST R0, GRADE                        ;SAVE GRADE
 	BRnzp GRDDONE
 
 ISBGRD
-	ADD R0, R2, #15	;ASCII '0' (48) + 15 = 63, THEN +3 BELOW
-	ADD R0, R0, #3	;R0 = 66 = ASCII 'B'
-	ST R0, GRADE	;SAVE GRADE
+	ADD R0, R2, #15                     ;ASCII '0' (48) + 15 = 63, THEN +3 BELOW
+	ADD R0, R0, #3                      ;R0 = 66 = ASCII 'B'
+	ST R0, GRADE                        ;SAVE GRADE
 	BRnzp GRDDONE
 
 ISCGRD
-	ADD R0, R2, #15	;ASCII '0' (48) + 15 = 63, THEN +4 BELOW
-	ADD R0, R0, #4	;R0 = 67 = ASCII 'C'
-	ST R0, GRADE	;SAVE GRADE
+	ADD R0, R2, #15                     ;ASCII '0' (48) + 15 = 63, THEN +4 BELOW
+	ADD R0, R0, #4                      ;R0 = 67 = ASCII 'C'
+	ST R0, GRADE                        ;SAVE GRADE
 	BRnzp GRDDONE
 
 ISDGRD
-	ADD R0, R2, #15	;ASCII '0' (48) + 15 = 63, THEN +5 BELOW
-	ADD R0, R0, #5	;R0 = 68 = ASCII 'D'
-	ST R0, GRADE	;SAVE GRADE
+	ADD R0, R2, #15                     ;ASCII '0' (48) + 15 = 63, THEN +5 BELOW
+	ADD R0, R0, #5                      ;R0 = 68 = ASCII 'D'
+	ST R0, GRADE                        ;SAVE GRADE
 
 GRDDONE
-	LD R1, SAVER1	;RESTORE R1
-	LD R2, SAVER2	;RESTORE R2
-	LD R3, SAVER3	;RESTORE R3
-	LD R4, SAVER4	;RESTORE R4
-	LD R5, SAVER5	;RESTORE R5
-	LD R6, SAVER6	;RESTORE R6
-	LD R7, SAVER7	;RESTORE RETURN ADDRESS
+	LD R1, SAVER1                       ;RESTORE R1
+	LD R2, SAVER2                       ;RESTORE R2
+	LD R3, SAVER3                       ;RESTORE R3
+	LD R4, SAVER4                       ;RESTORE R4
+	LD R5, SAVER5                       ;RESTORE R5
+	LD R6, SAVER6                       ;RESTORE R6
+	LD R7, SAVER7                       ;RESTORE RETURN ADDRESS
 
-	RET		;GO BACK TO MAIN
+	RET                                 ;GO BACK TO MAIN
 
 ;STEP 6
 PRINTRESULTS
 	; PUSH R1-R5, R7 onto stack (R6 = stack pointer)
 	ADD R6, R6, #-1
-	STR R1, R6, #0	;PUSH R1
+	STR R1, R6, #0                      ;PUSH R1
 	ADD R6, R6, #-1
-	STR R2, R6, #0	;PUSH R2
+	STR R2, R6, #0                      ;PUSH R2
 	ADD R6, R6, #-1
-	STR R3, R6, #0	;PUSH R3
+	STR R3, R6, #0                      ;PUSH R3
 	ADD R6, R6, #-1
-	STR R4, R6, #0	;PUSH R4
+	STR R4, R6, #0                      ;PUSH R4
 	ADD R6, R6, #-1
-	STR R5, R6, #0	;PUSH R5
+	STR R5, R6, #0                      ;PUSH R5
 	ADD R6, R6, #-1
-	STR R7, R6, #0	;PUSH R7 (RETURN ADDRESS)
+	STR R7, R6, #0                      ;PUSH R7 (RETURN ADDRESS)
 
 	; --- PRINT MINIMUM ---
-	LD R0, PTRLBLMIN	;PRINT "Minimum: "
+	LD R0, PTRLBLMIN                    ;PRINT "Minimum: "
 	PUTS
 
-	LDI R1, PTRMIN	;LOAD MIN INTO R1
-	AND R2, R2, #0	;CLEAR R2 (WILL HOLD TENS DIGIT)
-	AND R3, R3, #0	;CLEAR R3
-	ADD R3, R3, #-9	;BUILD -10 FOR DIVISION
-	ADD R3, R3, #-1	;R3 = -10
+	LDI R1, PTRMIN                      ;LOAD MIN INTO R1
+	AND R2, R2, #0                      ;CLEAR R2 (WILL HOLD TENS DIGIT)
+	AND R3, R3, #0                      ;CLEAR R3
+	ADD R3, R3, #-9                     ;BUILD -10 FOR DIVISION
+	ADD R3, R3, #-1                     ;R3 = -10
 
 MINTEN
-	ADD R1, R1, R3	;R1 = R1 - 10
-	BRn MINTENSDONE	;IF NEGATIVE, TENS DIGIT IS DONE
-	ADD R2, R2, #1	;INCREMENT TENS DIGIT COUNT
+	ADD R1, R1, R3                      ;R1 = R1 - 10
+	BRn MINTENSDONE                     ;IF NEGATIVE, TENS DIGIT IS DONE
+	ADD R2, R2, #1                      ;INCREMENT TENS DIGIT COUNT
 	BRnzp MINTEN
 
 MINTENSDONE
-	AND R3, R3, #0	;CLEAR R3
-	ADD R3, R3, #10	;R3 = 10 TO RECOVER ONES DIGIT
-	ADD R4, R1, R3	;R4 = ONES DIGIT (R1 WAS ONE STEP TOO FAR)
-	LDI R3, PTRASCII ;LOAD ASCII '0'
-	ADD R0, R2, R3	;TENS DIGIT + ASCII '0'
-	OUT		;PRINT TENS DIGIT
-	ADD R0, R4, R3	;ONES DIGIT + ASCII '0'
-	OUT		;PRINT ONES DIGIT
+	AND R3, R3, #0                      ;CLEAR R3
+	ADD R3, R3, #10                     ;R3 = 10 TO RECOVER ONES DIGIT
+	ADD R4, R1, R3                      ;R4 = ONES DIGIT (R1 WAS ONE STEP TOO FAR)
+	LDI R3, PTRASCII                    ;LOAD ASCII '0'
+	ADD R0, R2, R3                      ;TENS DIGIT + ASCII '0'
+	OUT                                 ;PRINT TENS DIGIT
+	ADD R0, R4, R3                      ;ONES DIGIT + ASCII '0'
+	OUT                                 ;PRINT ONES DIGIT
 	LD R0, PTRNEWLINE
 	PUTS
 
 	; --- PRINT MAXIMUM ---
-	LD R0, PTRLBLMAX	;PRINT "Maximum: "
+	LD R0, PTRLBLMAX                    ;PRINT "Maximum: "
 	PUTS
 
-	LDI R1, PTRMAX	;LOAD MAX INTO R1
-	AND R2, R2, #0	;CLEAR R2 (WILL HOLD TENS DIGIT)
-	AND R3, R3, #0	;CLEAR R3
-	ADD R3, R3, #-9	;BUILD -10 FOR DIVISION
-	ADD R3, R3, #-1	;R3 = -10
+	LDI R1, PTRMAX                      ;LOAD MAX INTO R1
+	AND R2, R2, #0                      ;CLEAR R2 (WILL HOLD TENS DIGIT)
+	AND R3, R3, #0                      ;CLEAR R3
+	ADD R3, R3, #-9                     ;BUILD -10 FOR DIVISION
+	ADD R3, R3, #-1                     ;R3 = -10
 
 MAXTEN
-	ADD R1, R1, R3	;R1 = R1 - 10
-	BRn MAXTENSDONE	;IF NEGATIVE, TENS DIGIT IS DONE
-	ADD R2, R2, #1	;INCREMENT TENS DIGIT COUNT
+	ADD R1, R1, R3                      ;R1 = R1 - 10
+	BRn MAXTENSDONE                     ;IF NEGATIVE, TENS DIGIT IS DONE
+	ADD R2, R2, #1                      ;INCREMENT TENS DIGIT COUNT
 	BRnzp MAXTEN
 
 MAXTENSDONE
-	AND R3, R3, #0	;CLEAR R3
-	ADD R3, R3, #10	;R3 = 10 TO RECOVER ONES DIGIT
-	ADD R4, R1, R3	;R4 = ONES DIGIT
+	AND R3, R3, #0                      ;CLEAR R3
+	ADD R3, R3, #10                     ;R3 = 10 TO RECOVER ONES DIGIT
+	ADD R4, R1, R3                      ;R4 = ONES DIGIT
 
-	LDI R3, PTRASCII ;LOAD ASCII '0'
+	LDI R3, PTRASCII                    ;LOAD ASCII '0'
 
-	ADD R0, R2, R3	;TENS DIGIT + ASCII '0'
-	OUT		;PRINT TENS DIGIT
-	ADD R0, R4, R3	;ONES DIGIT + ASCII '0'
-	OUT		;PRINT ONES DIGIT
+	ADD R0, R2, R3                      ;TENS DIGIT + ASCII '0'
+	OUT                                 ;PRINT TENS DIGIT
+	ADD R0, R4, R3                      ;ONES DIGIT + ASCII '0'
+	OUT                                 ;PRINT ONES DIGIT
 	LD R0, PTRNEWLINE
 	PUTS
 
 	; --- PRINT AVERAGE ---
-	LD R0, PTRLBLAVG	;PRINT "Average: "
+	LD R0, PTRLBLAVG                    ;PRINT "Average: "
 	PUTS
 
-	LDI R1, PTRAVG	;LOAD AVG INTO R1
-	AND R2, R2, #0	;CLEAR R2 (WILL HOLD TENS DIGIT)
-	AND R3, R3, #0	;CLEAR R3
-	ADD R3, R3, #-9	;BUILD -10 FOR DIVISION
-	ADD R3, R3, #-1	;R3 = -10
+	LDI R1, PTRAVG                      ;LOAD AVG INTO R1
+	AND R2, R2, #0                      ;CLEAR R2 (WILL HOLD TENS DIGIT)
+	AND R3, R3, #0                      ;CLEAR R3
+	ADD R3, R3, #-9                     ;BUILD -10 FOR DIVISION
+	ADD R3, R3, #-1                     ;R3 = -10
 
 AVGTEN
-	ADD R1, R1, R3	;R1 = R1 - 10
-	BRn AVGTENSDONE	;IF NEGATIVE, TENS DIGIT IS DONE
-	ADD R2, R2, #1	;INCREMENT TENS DIGIT COUNT
+	ADD R1, R1, R3                      ;R1 = R1 - 10
+	BRn AVGTENSDONE                     ;IF NEGATIVE, TENS DIGIT IS DONE
+	ADD R2, R2, #1                      ;INCREMENT TENS DIGIT COUNT
 	BRnzp AVGTEN
 
 AVGTENSDONE
-	AND R3, R3, #0	;CLEAR R3
-	ADD R3, R3, #10	;R3 = 10 TO RECOVER ONES DIGIT
-	ADD R4, R1, R3	;R4 = ONES DIGIT
+	AND R3, R3, #0                      ;CLEAR R3
+	ADD R3, R3, #10                     ;R3 = 10 TO RECOVER ONES DIGIT
+	ADD R4, R1, R3                      ;R4 = ONES DIGIT
 
-	LDI R3, PTRASCII ;LOAD ASCII '0'
+	LDI R3, PTRASCII                    ;LOAD ASCII '0'
 
-	ADD R0, R2, R3	;TENS DIGIT + ASCII '0'
-	OUT		;PRINT TENS DIGIT
-	ADD R0, R4, R3	;ONES DIGIT + ASCII '0'
-	OUT		;PRINT ONES DIGIT
+	ADD R0, R2, R3                      ;TENS DIGIT + ASCII '0'
+	OUT                                 ;PRINT TENS DIGIT
+	ADD R0, R4, R3                      ;ONES DIGIT + ASCII '0'
+	OUT                                 ;PRINT ONES DIGIT
 	LD R0, PTRNEWLINE
 	PUTS
 
 	; --- PRINT GRADE ---
-	LD R0, PTRNEWLINE	;PRINT "Grade: "
+	LD R0, PTRNEWLINE                   ;PRINT "Grade: "
 	PUTS
 
-	LDI R0, PTRGRADE	;LOAD GRADE (ALREADY ASCII)
-	OUT		;PRINT LETTER GRADE
+	LDI R0, PTRGRADE                    ;LOAD GRADE (ALREADY ASCII)
+	OUT                                 ;PRINT LETTER GRADE
 	LD R0, PTRNEWLINE
 	PUTS
 
 	; POP R7, R5-R1 from stack (reverse order)
 	LDR R7, R6, #0
-	ADD R6, R6, #1	;POP R7 (RETURN ADDRESS)
+	ADD R6, R6, #1                      ;POP R7 (RETURN ADDRESS)
 	LDR R5, R6, #0
-	ADD R6, R6, #1	;POP R5
+	ADD R6, R6, #1                      ;POP R5
 	LDR R4, R6, #0
-	ADD R6, R6, #1	;POP R4
+	ADD R6, R6, #1                      ;POP R4
 	LDR R3, R6, #0
-	ADD R6, R6, #1	;POP R3
+	ADD R6, R6, #1                      ;POP R3
 	LDR R2, R6, #0
-	ADD R6, R6, #1	;POP R2
+	ADD R6, R6, #1                      ;POP R2
 	LDR R1, R6, #0
-	ADD R6, R6, #1	;POP R1
+	ADD R6, R6, #1                      ;POP R1
 
-	RET		;GO BACK TO MAIN
+	RET                                 ;GO BACK TO MAIN
 
 ;POINTER CASUSE CODE IS TOO LONG
 PTRLBLMIN	.FILL LBLMIN
